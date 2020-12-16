@@ -3,20 +3,27 @@ package com.cug.util;
 import java.sql.*;
 
 public class JDBCUtil {
-    private Connection connection;
+    private static Connection connection;
 
-    public JDBCUtil(String driverUrl) throws ClassNotFoundException {
-        Class.forName(driverUrl);
-    }
-
-    public Connection getConnection(String url, String userName, String userPassword) throws SQLException {
-        if(this.connection == null){
-            this.connection = DriverManager.getConnection(url, userName, userPassword);
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return this.connection;
     }
 
-    public void close(Connection connection, Statement statement, ResultSet resultSet) throws SQLException {
+    public static Connection getConnection() throws SQLException {
+        if(connection == null || connection.isClosed()){
+            String url = "jdbc:mysql://localhost:3306/huaxia_genealogies";
+            String userName = "root";
+            String userPassword = "ycsniubi88";
+            connection = DriverManager.getConnection(url, userName, userPassword);
+        }
+        return connection;
+    }
+
+    public static void close(Connection connection, Statement statement, ResultSet resultSet) throws SQLException {
         if(connection != null && ! connection.isClosed()){
             connection.close();
         }
