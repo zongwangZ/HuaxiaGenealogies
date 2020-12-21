@@ -9,6 +9,6 @@ import java.io.IOException;
 public class LogupController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("LogupController");
+        resp.sendRedirect(req.getContextPath() + "/html/logup.jsp");
     }
 }

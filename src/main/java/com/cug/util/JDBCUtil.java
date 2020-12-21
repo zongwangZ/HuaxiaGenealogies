@@ -15,7 +15,7 @@ public class JDBCUtil {
 
     public static Connection getConnection() throws SQLException {
         if(connection == null || connection.isClosed()){
-            String url = "jdbc:mysql://localhost:3306/huaxia_genealogies";
+            String url = "jdbc:mysql://127.0.0.1:3306/huaxia_genealogies?useSSL=false";
             String userName = "root";
             String userPassword = "ycsniubi88";
             connection = DriverManager.getConnection(url, userName, userPassword);

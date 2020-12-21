@@ -41,4 +41,37 @@ public class PersonDaoImpl implements IPersonDao {
         }
         return person;
     }
+
+    public Integer insertUserByAccount(String uid, String userName, String userPassword) {
+        Integer id = null;
+        try {
+            connection = JDBCUtil.getConnection();
+            String sql = "insert into person (uid, name, password) values (?,?,?)";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, uid);
+            ps.setString(2, userName);
+            ps.setString(3, userPassword);
+            id = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public Integer selectUserByUid(String uid) {
+        Integer id = null;
+        try {
+            connection = JDBCUtil.getConnection();
+            String sql = "select id from person where uid=?";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, uid);
+            resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                id = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
